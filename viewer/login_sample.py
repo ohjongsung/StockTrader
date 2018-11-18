@@ -1,9 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 import win32com.client
-from PyQt5.QtGui import *
-from PyQt5.QAxContainer import *
-import luncher.daishin.cybos_luncher
+from luncher.daishin import cybos_luncher
 
 
 class MyWindow(QMainWindow):
@@ -21,7 +19,7 @@ class MyWindow(QMainWindow):
         btn2.clicked.connect(self.btn2_clicked)
 
     def btn1_clicked(self):
-        luncher.daishin.cybos_luncher.cybos_login()
+        cybos_luncher.cybos_login()
 
     def btn2_clicked(self):
         obj_cybos = win32com.client.Dispatch("CpUtil.CpCybos")
