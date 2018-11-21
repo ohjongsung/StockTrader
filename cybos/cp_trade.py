@@ -14,6 +14,12 @@ class CpTdUtil(object):
     def trade_init(self):
         self.obj.TradeInit()
 
+    # 사인온 한 계좌에 대해서 필터 값에 따른 계좌목록을 배열로 반환한다.
+    # -1 : 전체, 1 : 주식, 2 : 선물/옵션 16 : EUREX, 64 : 해외선물
+    def goods_list(self):
+        return self.obj.GoodsList()
+
+
 
 # 장내주식/코스닥주식/ELW 현금주문을 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=159&page=2&searchString=&p=&v=&m=
