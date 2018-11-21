@@ -30,7 +30,7 @@ class CpTdOrder(object):
     # 4     주문수량
     # 5     주문단가
     # 7     주문조건구분코드 : 0 - 없음, 1 - IOC, 2 - FOK
-    # 8     주문호가구분코드(type 6 대체) : 01 - 보통(default), 02 - 임의, 03 - 시장가, 05 - 조건부지정가...더 있는데 내가 사용할거 같지 않음
+    # 8     주문호가구분코드(type 6 대체) : 01 - 보통(지정가), 02 - 임의, 03 - 시장가, 05 - 조건부지정가...더 있는데 내가 사용할거 같지 않음
     def set_input_value(self, data_type, value):
         self.obj.SetInputValue(data_type, value)
 
