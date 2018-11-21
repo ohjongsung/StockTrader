@@ -32,7 +32,7 @@ def cybos_login():
     def ret_wind():
         return cybos_plus_app.connect(title='CYBOS Starter').Dialog
 
-    dlg = pywinauto.timings.wait_until_passes(2, 0.5, ret_wind)
+    dlg = pywinauto.timings.wait_until_passes(10, 0.5, ret_wind)
     print('done dlg')
 
     # pass edit
