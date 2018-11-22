@@ -3,7 +3,7 @@ import win32com.client
 
 # 계좌별 잔고 및 주문체결 평가 현황 데이터 조회를 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=286&seq=176&page=3&searchString=&p=&v=&m=
-class CpAccountInfo(object):
+class CpAccount(object):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTd6033')
 
@@ -55,3 +55,13 @@ class CpAccountInfo(object):
     # 18    손익단가
     def get_data_value(self, data_type, index):
         self.obj.GetDataValue(data_type, index)
+
+    def block_request(self):
+        self.obj.BlockRequest()
+
+    def get_dib_status(self):
+        return self.obj.GetDibStatus()
+
+    def get_dib_mgs1(self):
+        return self.obj.GetDibMsg1()
+
