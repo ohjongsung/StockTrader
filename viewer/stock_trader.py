@@ -15,7 +15,7 @@ class MyWindow(QMainWindow, form_class):
         super().__init__()
         self.setupUi(self)
         self.initTrade = False
-        cybos_luncher.cybos_login()
+        # cybos_luncher.cybos_login()
         self.CpCybos = cp_util.CpCybos()
         self.CpStockCode = cp_util.CpStockCode()
         self.CpTdUtil = cp_trade.CpTdUtil()
@@ -35,17 +35,18 @@ class MyWindow(QMainWindow, form_class):
         current_time = QTime.currentTime()
         text_time = current_time.toString("hh:mm:ss")
         time_msg = "현재시간: " + text_time
-        trade_init = "Need to execute Trade Init"
 
         if self.CpCybos.is_connect():
             state_msg = "서버 연결 됨"
+            trade_init = "Need to execute Trade Init"
             if self.initTrade is False:
                 init_check = self.CpTdUtil.trade_init()
                 if init_check == 0:
-                    accounts = self.CpTdUtil.get_account_number()
-                    self.comboBox.addItems(accounts[0])
-                    trade_init = "Trade Init executed!!"
+                    account_list = [self.CpTdUtil.get_account_number()[0]]
+                    self.comboBox.addItems(account_list)
                     self.initTrade = True
+            else:
+                trade_init = "Trade Init executed!!"
         else:
             state_msg = "서버 연결 안됨"
 

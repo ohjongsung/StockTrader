@@ -8,17 +8,16 @@ class CpTdUtil(object):
 
     # 사용자의 U-CYBOS 로 사인온한 복수계좌목록을스트링 배열로 받아온다.
     def get_account_number(self):
-        return self.obj.AccountNumber()
+        return self.obj.AccountNumber
 
     # 주문을 하기 위한 예비과정을 수행한다.
     def trade_init(self):
-        self.obj.TradeInit()
+        return self.obj.TradeInit()
 
     # 사인온 한 계좌에 대해서 필터 값에 따른 계좌목록을 배열로 반환한다.
     # -1 : 전체, 1 : 주식, 2 : 선물/옵션 16 : EUREX, 64 : 해외선물
     def goods_list(self):
         return self.obj.GoodsList()
-
 
 
 # 장내주식/코스닥주식/ELW 현금주문을 위한 클래스
