@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>855</width>
+    <width>1062</width>
     <height>720</height>
    </rect>
   </property>
@@ -233,7 +233,7 @@
      <rect>
       <x>200</x>
       <y>10</y>
-      <width>641</width>
+      <width>851</width>
       <height>571</height>
      </rect>
     </property>
@@ -245,7 +245,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>621</width>
+       <width>821</width>
        <height>51</height>
       </rect>
      </property>
@@ -264,62 +264,22 @@
      <row/>
      <column>
       <property name="text">
-       <string>예수금 (d+2)</string>
+       <string>계좌명</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>총매입</string>
+       <string>결제잔고수량</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>총평가</string>
+       <string>체결잔고수량</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>총손익</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>총수익률 (%)</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>추정자산</string>
-      </property>
-     </column>
-    </widget>
-    <widget class="QTableWidget" name="tableWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>621</width>
-       <height>431</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>종목명</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>보유량</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>매입가</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>현재가</string>
+       <string>평가금액</string>
       </property>
      </column>
      <column>
@@ -329,14 +289,64 @@
      </column>
      <column>
       <property name="text">
-       <string>수익률 (%)</string>
+       <string>수익률</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>예수금 (d+2)</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>821</width>
+       <height>431</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>종목코드</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>종목명</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>신용구분</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>체결잔고수량</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>체결장부단가</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>평가금액</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>평가손익</string>
       </property>
      </column>
     </widget>
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>534</x>
+       <x>740</x>
        <y>520</y>
        <width>91</width>
        <height>23</height>
@@ -349,7 +359,7 @@
     <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
       <rect>
-       <x>440</x>
+       <x>640</x>
        <y>520</y>
        <width>91</width>
        <height>21</height>
@@ -366,7 +376,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>855</width>
+     <width>1062</width>
      <height>21</height>
     </rect>
    </property>
