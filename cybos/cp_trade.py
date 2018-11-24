@@ -155,7 +155,7 @@ class CpConclusionHandler:
         conclusion[22] = self.client.GetHeaderValue(22)
         # 체결기준잔고수량
         conclusion[23] = self.client.GetHeaderValue(23)
-        return conclusion
+        print(conclusion)
 
 
 # 장내주식/코스닥주식/ELW 현금주문 취소를 위한 클래스
