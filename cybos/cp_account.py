@@ -1,11 +1,13 @@
 import win32com.client
+from cybos import cp_util
 
 
 # 계좌별 잔고 및 주문체결 평가 현황 데이터 조회를 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=286&seq=176&page=3&searchString=&p=&v=&m=
-class CpAccount(object):
+class CpAccount(cp_util.Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTd6033')
+        super(CpAccount, self).__init__(self.obj)
 
     # type 에 해당하는 입력 데이터를 value 값으로 지정합니다.
     # type  value
@@ -58,10 +60,4 @@ class CpAccount(object):
 
     def block_request(self):
         self.obj.BlockRequest()
-
-    def get_dib_status(self):
-        return self.obj.GetDibStatus()
-
-    def get_dib_mgs1(self):
-        return self.obj.GetDibMsg1()
 

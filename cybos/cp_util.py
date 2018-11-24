@@ -1,8 +1,20 @@
 import win32com.client
 
 
+# CYBOS 통신 결과 수신 코어 클래스
+class Core(object):
+    def __init__(self, obj):
+        self.obj = obj
+
+    def get_dib_status(self):
+        return self.obj.GetDibStatus()
+
+    def get_dib_mgs1(self):
+        return self.obj.GetDibMsg1()
+
+
 # CYBOS 의 상태 값 확인 클래스
-class CpCybos(object):
+class CpCybos(Core):
     # limitType: 요쳥에 대한 제한타입
     # 주문관련 RQ 요청
     LT_TRADE_REQUEST = 0
@@ -13,6 +25,7 @@ class CpCybos(object):
 
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpUtil.CpCybos')
+        super(CpCybos, self).__init__(self.obj)
 
     # CYBOS 의 통신연결상태를 반환합니다.
     # 0 - 연결 끊김, 1 - 연결 정상
@@ -36,9 +49,10 @@ class CpCybos(object):
 
 
 # 주식 코드 조회 클래스
-class CpStockCode(object):
+class CpStockCode(Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpUtil.CpStockCode')
+        super(CpStockCode, self).__init__(self.obj)
 
     # code 에 해당하는 종목 명을 반환합니다.
     def code_to_name(self, code):
@@ -80,9 +94,10 @@ class CpStockCode(object):
 
 
 # 주식 코드 정보 및 코드 리스트 조회 클래스
-class CpCodeMgr(object):
+class CpCodeMgr(Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpUtil.CpCodeMgr')
+        super(CpCodeMgr, self).__init__(self.obj)
 
     # code 에 해당하는 주식/선물/옵션 종목명을 반환한다.
     def code_to_name(self, code):

@@ -1,10 +1,12 @@
 import win32com.client
+from cybos import cp_util
 
 
 # 주문 오브젝트를 사용하기 위해 필요한 초기화 클래스
-class CpTdUtil(object):
+class CpTdUtil(cp_util.Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTdUtil')
+        super(CpTdUtil, self).__init__(self.obj)
 
     # 사용자의 U-CYBOS 로 사인온한 복수계좌목록을스트링 배열로 받아온다.
     def get_account_number(self):
@@ -22,9 +24,10 @@ class CpTdUtil(object):
 
 # 장내주식/코스닥주식/ELW 현금주문을 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=159&page=2&searchString=&p=&v=&m=
-class CpTdOrder(object):
+class CpTdOrder(cp_util.Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTd0311')
+        super(CpTdOrder, self).__init__(self.obj)
 
     # type 에 해당하는 입력 데이터를 value 값으로 지정합니다.
     # type  value
@@ -157,9 +160,10 @@ class CpConclusionHandler:
 
 # 장내주식/코스닥주식/ELW 현금주문 취소를 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=162&page=1&searchString=&p=&v=&m=
-class CpTdCancelOrder(object):
+class CpTdCancelOrder(cp_util.Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTd0314')
+        super(CpTdCancelOrder, self).__init__(self.obj)
 
     # type 에 해당하는 입력 데이터를 value 값으로 지정합니다.
     # type  value
@@ -191,9 +195,10 @@ class CpTdCancelOrder(object):
 
 # 장내주식/코스닥주식/ELW 현금주문 정정을 위한 클래스
 # https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=161&page=2&searchString=&p=&v=&m=
-class CpTdUpdateOrder(object):
+class CpTdUpdateOrder(cp_util.Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpTrade.CpTd0313')
+        super(CpTdUpdateOrder, self).__init__(self.obj)
 
     # type 에 해당하는 입력 데이터를 value 값으로 지정합니다.
     # type  value
