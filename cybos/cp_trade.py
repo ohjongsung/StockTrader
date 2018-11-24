@@ -16,8 +16,8 @@ class CpTdUtil(object):
 
     # 사인온 한 계좌에 대해서 필터 값에 따른 계좌목록을 배열로 반환한다.
     # -1 : 전체, 1 : 주식, 2 : 선물/옵션 16 : EUREX, 64 : 해외선물
-    def goods_list(self):
-        return self.obj.GoodsList()
+    def goods_list(self, account, index):
+        return self.obj.GoodsList(account, index)
 
 
 # 장내주식/코스닥주식/ELW 현금주문을 위한 클래스
