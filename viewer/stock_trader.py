@@ -111,7 +111,6 @@ class MyWindow(QMainWindow, form_class):
 
         cnt = len(unusual_stock_list)
         if cnt is 0:
-            self.Slack.push('조회된 특징주가 없습니다.')
             print('조회된 특징주가 없습니다.')
             return False
 
