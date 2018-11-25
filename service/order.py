@@ -31,13 +31,9 @@ class OrderService:
 
         self.CpTdOrder.block_request()
 
-        request_status = self.CpTdOrder.get_dib_status()
-        request_result = self.CpTdOrder.get_dib_mgs1()
-
-        print("통신상태", request_status, request_result)
-
-        if request_status != 0:
-            exit()
+        # 통신 및 통신 에러 처리
+        if self.CpTdOrder.get_communication_status() is False:
+            return exit()
 
     # 주식 매도 주문
     def sell(self, code, amount, price):
@@ -53,12 +49,8 @@ class OrderService:
         # 매도 주문 요청
         self.CpTdOrder.block_request()
 
-        request_status = self.CpTdOrder.get_dib_status()
-        request_result = self.CpTdOrder.get_dib_mgs1()
-
-        print("통신상태", request_status, request_result)
-
-        if request_status != 0:
+        # 통신 및 통신 에러 처리
+        if self.CpTdOrder.get_communication_status() is False:
             pass
 
     # 주문 취소

@@ -64,6 +64,7 @@ class CpTdOrder(cp_util.Core):
 
 
 # 실시간 주문 체결 수신 클래스
+# https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=155&page=2&searchString=&p=&v=&m=
 class CpConclusion:
     def __init__(self):
         self.obj = win32com.client.Dispatch("DsCbo1.CpConclusion")
@@ -77,7 +78,6 @@ class CpConclusion:
 
 
 # 실시간 주문 체결 이벤트 핸들러
-# https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=291&seq=155&page=2&searchString=&p=&v=&m=
 class CpConclusionHandler:
     def __init__(self, client):
         self.client = client

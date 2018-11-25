@@ -12,6 +12,16 @@ class Core(object):
     def get_dib_mgs1(self):
         return self.obj.GetDibMsg1()
 
+    def get_communication_status(self):
+        # 통신 및 통신 에러 처리
+        request_status = self.get_dib_status()
+        request_result = self.get_dib_mgs1()
+        print("통신상태", request_status, request_result)
+        if request_status != 0:
+            return False
+        else:
+            return True
+
 
 # CYBOS 의 상태 값 확인 클래스
 class CpCybos(Core):

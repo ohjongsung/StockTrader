@@ -25,10 +25,7 @@ class AccountService:
         self.CpAccount.block_request()
 
         # 통신 및 통신 에러 처리
-        request_status = self.CpAccount.get_dib_status()
-        request_result = self.CpAccount.get_dib_mgs1()
-        print("통신상태", request_status, request_result)
-        if request_status != 0:
+        if self.CpAccount.get_communication_status() is False:
             return False
 
         balance = {}

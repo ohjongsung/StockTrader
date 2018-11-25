@@ -3,6 +3,7 @@ from service import order
 from service import account
 from service import initial
 from service import stock
+from service import watch
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -19,6 +20,7 @@ class MyWindow(QMainWindow, form_class):
         self.StockService = stock.StockService()
         self.OrderService = order.OrderService()
         self.AccountService = account.AccountService()
+        self.WatchService = watch.WatchService()
 
         self.timer = QTimer(self)
         self.timer.start(1000)
@@ -28,10 +30,15 @@ class MyWindow(QMainWindow, form_class):
         self.timer2.start(1000*10)
         self.timer2.timeout.connect(self.timeout2)
 
+        self.timer3 = QTimer(self)
+        self.timer3.start(1000*10)
+        self.timer3.timeout.connect(self.timeout3)
+
         self.comboBox.addItems([self.AccountService.get_account_num()])
         self.lineEdit.textChanged.connect(self.code_changed)
         self.pushButton.clicked.connect(self.send_order)
         self.pushButton_2.clicked.connect(self.show_balance)
+        self.pushButton_3.clicked.connect(self.get_unusual_stock)
 
     def timeout(self):
         current_time = QTime.currentTime()
@@ -43,6 +50,10 @@ class MyWindow(QMainWindow, form_class):
     def timeout2(self):
         if self.checkBox.isChecked():
             self.show_balance()
+
+    def timeout3(self):
+        if self.checkBox_2.isChecked():
+            self.get_unusual_stock()
 
     def code_changed(self):
         code = self.lineEdit.text()
@@ -89,6 +100,28 @@ class MyWindow(QMainWindow, form_class):
                 self.tableWidget_2.setItem(i, j, item)
 
         self.tableWidget_2.resizeRowsToContents()
+
+    def get_unusual_stock(self):
+        unusual_stock_list = self.WatchService.get_unusual_stock()
+        if unusual_stock_list is False:
+            print('조회된 특징주가 없습니다.')
+            return False
+
+        cnt = len(unusual_stock_list)
+        if cnt is 0:
+            print('조회된 특징주가 없습니다.')
+            return False
+
+        self.tableWidget_4.setRowCount(cnt)
+
+        for i in range(cnt):
+            row = unusual_stock_list[i]
+            for j in range(len(row)):
+                item = QTableWidgetItem(row[j])
+                item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+                self.tableWidget_4.setItem(i, j, item)
+
+        self.tableWidget_4.resizeRowsToContents()
 
 
 if __name__ == "__main__":
