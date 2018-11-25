@@ -4,6 +4,7 @@ from service import account
 from service import initial
 from service import stock
 from service import watch
+from service import slack
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -21,6 +22,7 @@ class MyWindow(QMainWindow, form_class):
         self.OrderService = order.OrderService()
         self.AccountService = account.AccountService()
         self.WatchService = watch.WatchService()
+        self.Slack = slack.Slack()
 
         self.timer = QTimer(self)
         self.timer.start(1000)
@@ -109,6 +111,7 @@ class MyWindow(QMainWindow, form_class):
 
         cnt = len(unusual_stock_list)
         if cnt is 0:
+            self.Slack.push('조회된 특징주가 없습니다.')
             print('조회된 특징주가 없습니다.')
             return False
 
