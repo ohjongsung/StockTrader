@@ -13,6 +13,5 @@ class Slack(object):
     def push(self, message):
         slack_message = {'text': message}
         requests.post(
-            self.webhook_url, data=json.dumps(slack_message),
-            headers={'Content-Type': 'application/json'}
+            self.webhook_url, json=slack_message
         )
