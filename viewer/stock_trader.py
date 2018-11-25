@@ -72,7 +72,7 @@ class MyWindow(QMainWindow, form_class):
         if order_type_lookup[order_type] == '1':
             self.OrderService.buy(code, price, amount)
         elif order_type_lookup[order_type] == '2':
-            self.OrderService.sell(code, amount, price)
+            self.OrderService.sell(code, price, amount)
 
     def show_balance(self):
         balance = self.AccountService.check_balance()

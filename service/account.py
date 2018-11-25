@@ -7,8 +7,6 @@ class AccountService:
     def __init__(self):
         self.CpTdUtil = cp_trade.CpTdUtil()
         self.CpAccount = cp_account.CpAccount()
-        self.CpAvailableBuy = cp_account.CpAvailableBuy()
-
         self.accountNumber = self.CpTdUtil.get_account_number()[0]
         self.acc_flag = self.CpTdUtil.goods_list(self.accountNumber, 1)[0]
 
@@ -65,22 +63,3 @@ class AccountService:
     def get_account_num(self):
         return self.accountNumber
 
-    # 주문 가능 수량 계산
-    def calculate_buy_stock_amount(self, price, code):
-        self.CpAvailableBuy.set_input_value(0, self.accountNumber)  # 계좌번호
-        self.CpAvailableBuy.set_input_value(1, self.acc_flag)
-        self.CpAvailableBuy.set_input_value(2, code)  # 종목코드
-        self.CpAvailableBuy.set_input_value(3, '01')  # 보통가
-        self.CpAvailableBuy.set_input_value(4, int(price))  # 가격
-        self.CpAvailableBuy.set_input_value(6, 2)  # 수량 조회
-
-        self.CpAvailableBuy.block_request()
-
-        money_to_buy = self.CpAvailableBuy.get_header_value(18)  # 현금 주문 가능수량
-        amount = self.CpAvailableBuy.get_header_value(45)  # 잔고 호출
-
-        # 매수수량, 잔고 확인 및 리턴
-        print(amount)
-        print(money_to_buy)
-
-        return money_to_buy
