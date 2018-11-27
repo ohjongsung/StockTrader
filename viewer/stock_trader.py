@@ -5,6 +5,7 @@ from service import initial
 from service import stock
 from service import watch
 from service import slack
+from service import strategy
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -23,6 +24,7 @@ class MyWindow(QMainWindow, form_class):
         self.AccountService = account.AccountService()
         self.WatchService = watch.WatchService()
         self.Slack = slack.Slack()
+        self.StrategyService = strategy.StrategyService()
 
         self.timer = QTimer(self)
         self.timer.start(1000)
@@ -41,6 +43,12 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton.clicked.connect(self.send_order)
         self.pushButton_2.clicked.connect(self.show_balance)
         self.pushButton_3.clicked.connect(self.get_unusual_stock)
+
+        my_strategy_list = self.StrategyService.get_my_strategy()
+        my_strategy = my_strategy_list['외인과 기관 전일 순매수']
+        strategy_name = my_strategy['전략명']
+        strategy_id = my_strategy['ID']
+        print(strategy_name, strategy_id)
 
     def timeout(self):
         current_time = QTime.currentTime()

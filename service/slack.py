@@ -1,5 +1,4 @@
 import requests
-import json
 
 
 # 슬랙에 메시지를 보내는 클래스
