@@ -55,6 +55,7 @@ class StrategyService:
         stock_list = []
         for i in range(cnt):
             item = {}
+            item['time'] = search_time
             item['code'] = self.CpCssStgFind.get_data_value(0, i)
             item['종목명'] = self.StockService.code_to_name(item['code'])
             stock_list.append(item)
@@ -78,7 +79,7 @@ class StrategyService:
 
         return True, monitoring_id
 
-    def request_monitoring(self, strategy_id, monitoring_id, is_start):
+    def request_monitoring(self, strategy_id, monitoring_id, is_start, caller):
         self.CpCssWatchStgControl.set_input_value(0, strategy_id)
         self.CpCssWatchStgControl.set_input_value(1, monitoring_id)
 
@@ -103,7 +104,7 @@ class StrategyService:
             print('전략감시상태: 등록취소')
 
         if self.isMonitoring is False:
-            self.CpCssAlert.subscribe()
+            self.CpCssAlert.subscribe(caller)
             self.isMonitoring = True
 
         # 진행 중인 전략들 저장
@@ -127,7 +128,7 @@ class StrategyService:
             delitem.append((strategy_id, monitoring_id))
 
         for item in delitem:
-            self.request_monitoring(item[0], item[1], False)
+            self.request_monitoring(item[0], item[1], False, None)
 
         print(len(self.strategy_monitor_ids))
 
@@ -149,10 +150,10 @@ class CpCssAlert:
     def get_header_value(self, data_type):
         self.obj.GetHeaderValue(data_type)
 
-    def subscribe(self):
+    def subscribe(self, caller):
         self.obj.Unsubscribe()
         handler = win32com.client.WithEvents(self.obj, CpStrategyWatchHandler)
-        handler.set_client(self.obj)
+        handler.set_client(self.obj, caller)
         self.obj.Subscribe()
 
     def unsubscribe(self):
@@ -165,24 +166,26 @@ class CpStrategyWatchHandler:
         self.StockService = stock.StockService()
         self.Slack = slack.Slack()
 
-    def set_client(self, client):
+    def set_client(self, client, caller):
         self.client = client
+        self.caller = caller
 
     def on_received(self):
-        stocks = {}
-        stocks['전략ID'] = self.client.get_header_value(0)
-        stocks['감시일련번호'] = self.client.get_header_value(1)
-        code = stocks['code'] = self.client.get_header_value(2)
-        stocks['종목명'] = self.StockService.code_to_name(code)
+        stock = {}
+        stock['전략ID'] = self.client.get_header_value(0)
+        stock['감시일련번호'] = self.client.get_header_value(1)
+        code = stock['code'] = self.client.get_header_value(2)
+        stock['종목명'] = self.StockService.code_to_name(code)
 
         in_out_flag = self.client.get_header_value(3)
         if ord('1') is in_out_flag:
-            stocks['INOUT'] = '진입'
+            stock['INOUT'] = '진입'
         elif ord('2') is in_out_flag:
-            stocks['INOUT'] = '퇴출'
-        stocks['시각'] = self.client.get_header_value(4)
-        stocks['현재가'] = self.client.get_header_value(5)
+            stock['INOUT'] = '퇴출'
+        stock['time'] = self.client.get_header_value(4)
+        stock['현재가'] = self.client.get_header_value(5)
 
-        message = stocks['code'] + '/' + stocks['종목명'] + ' ' + stocks['INOUT'] + ' ' + stocks['시각'] + ' ' + stocks['현재가']
+        message = stock['code'] + '/' + stock['종목명'] + ' ' + stock['INOUT'] + ' ' + stock['time'] + ' ' + stock['현재가']
         print(message)
         self.Slack.push(message)
+        self.caller.change_strategy_stocks(stock)

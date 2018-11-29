@@ -36,11 +36,7 @@ class MyWindow(QMainWindow, form_class):
         self.timer2.start(1000*10)
         self.timer2.timeout.connect(self.timeout2)
 
-        self.comboBox.addItems([self.AccountService.get_account_num()])
-        self.lineEdit.textChanged.connect(self.code_changed)
-        self.pushButton.clicked.connect(self.send_order)
         self.pushButton_2.clicked.connect(self.show_balance)
-        self.pushButton_3.clicked.connect(self.get_unusual_stock)
         self.comboBox_3.currentIndexChanged.connect(self.change_strategy)
         # 전략리스트 조회
         self.list_up_my_strategy()
@@ -88,10 +84,11 @@ class MyWindow(QMainWindow, form_class):
         print('감시일련번호', monitor_id)
 
         # 4 - 전략 감시 시작 요청 - CpSysDib.CssWatchStgControl
-        result, status = self.StrategyService.request_monitoring(id, monitor_id, True)
+        result, status = self.StrategyService.request_monitoring(id, monitor_id, True, self)
         if result is False:
             return
 
+        self.show_strategy_stocks()
         return
 
     def timeout(self):
@@ -109,18 +106,6 @@ class MyWindow(QMainWindow, form_class):
         code = self.lineEdit.text()
         name = self.StockService.code_to_name(code)
         self.lineEdit_2.setText(name)
-
-    def send_order(self):
-        order_type_lookup = {'매도': '1', '매수': '2', '매도취소': '3', '매수취소': '4'}
-        order_type = self.comboBox_2.currentText()
-
-        code = self.lineEdit.text()
-        amount = self.spinBox.value()
-        price = self.spinBox_2.value()
-        if order_type_lookup[order_type] == '1':
-            self.OrderService.buy(code, price, amount)
-        elif order_type_lookup[order_type] == '2':
-            self.OrderService.sell(code, price, amount)
 
     def show_balance(self):
         balance = self.AccountService.check_balance()
@@ -151,23 +136,28 @@ class MyWindow(QMainWindow, form_class):
 
         self.tableWidget_2.resizeRowsToContents()
 
-    def get_unusual_stock(self):
-        unusual_stock_list = self.WatchService.get_unusual_stock()
-        if unusual_stock_list is False:
-            print('조회된 특징주가 없습니다.')
-            return False
+    def change_strategy_stocks(self, stock):
+        if stock['INOUT'] is '진입':
+            self.strategy_stocks.append(stock)
+            self.show_strategy_stocks()
+        else:
+            for i in range(len(self.strategy_stocks)):
+                if stock['code'] is self.strategy_stocks[i]['code']:
+                    self.strategy_stocks.remove(i)
 
-        cnt = len(unusual_stock_list)
+    def show_strategy_stocks(self):
+        cnt = len(self.strategy_stocks)
         if cnt is 0:
-            print('조회된 특징주가 없습니다.')
+            print('전략에 검색된 종목이 없습니다.')
             return False
 
         self.tableWidget_4.setRowCount(cnt)
 
+        column_name = ['time', 'code', '종목명']
         for i in range(cnt):
-            row = unusual_stock_list[i]
+            row = self.strategy_stocks[i]
             for j in range(len(row)):
-                item = QTableWidgetItem(row[j])
+                item = QTableWidgetItem(row[column_name.__getitem__(j)])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_4.setItem(i, j, item)
 
