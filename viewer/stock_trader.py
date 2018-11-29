@@ -25,6 +25,8 @@ class MyWindow(QMainWindow, form_class):
         self.WatchService = watch.WatchService()
         self.Slack = slack.Slack()
         self.StrategyService = strategy.StrategyService()
+        self.my_strategy_list = {}
+        self.strategy_stocks = []
 
         self.timer = QTimer(self)
         self.timer.start(1000)
@@ -34,21 +36,63 @@ class MyWindow(QMainWindow, form_class):
         self.timer2.start(1000*10)
         self.timer2.timeout.connect(self.timeout2)
 
-        self.timer3 = QTimer(self)
-        self.timer3.start(1000*10)
-        self.timer3.timeout.connect(self.timeout3)
-
         self.comboBox.addItems([self.AccountService.get_account_num()])
         self.lineEdit.textChanged.connect(self.code_changed)
         self.pushButton.clicked.connect(self.send_order)
         self.pushButton_2.clicked.connect(self.show_balance)
         self.pushButton_3.clicked.connect(self.get_unusual_stock)
+        self.comboBox_3.currentIndexChanged.connect(self.change_strategy)
+        # 전략리스트 조회
+        self.list_up_my_strategy()
 
-        my_strategy_list = self.StrategyService.get_my_strategy()
-        my_strategy = my_strategy_list['외인과 기관 전일 순매수']
-        strategy_name = my_strategy['전략명']
-        strategy_id = my_strategy['ID']
-        print(strategy_name, strategy_id)
+    def list_up_my_strategy(self):
+        self.comboBox_3.addItem('전략선택없음')
+        self.my_strategy_list = self.StrategyService.get_my_strategy()
+
+        for k, v in self.my_strategy_list.items():
+            self.comboBox_3.addItem(k)
+
+    def change_strategy(self):
+        strategy_name = self.comboBox_3.currentText()
+        print(strategy_name)
+        if strategy_name == '전략선택없음':
+            return
+
+        # 1: 기존 감시 중단 (중요)
+        # 종목검색 실시간 감시 개수 제한이 있어, 불필요한 감시는 중단이 필요
+        self.StrategyService.monitoring_all_stop()
+
+        # 2 - 종목검색 조회: CpSysDib.CssStgFind
+        item = self.my_strategy_list[strategy_name]
+        id = item['ID']
+        name = item['전략명']
+
+        result, self.strategy_stocks = self.StrategyService.search_strategy_stock(id)
+        if result is False:
+            return
+
+        for item in self.strategy_stocks:
+            print(item)
+        print('검색전략:', id, '전략명:', name, '검색종목수:', len(self.strategy_stocks))
+
+        if len(self.strategy_stocks) >= 200:
+            print('검색종목이 200 을 초과할 경우 실시간 감시 불가 ')
+            return
+
+        #####################################################
+        # 실시간 요청
+        # 3 - 전략의 감시 일련번호 요청 : CssWatchStgSubscribe
+        result, monitor_id = self.StrategyService.get_monitoring_id(id)
+        if result is False:
+            return
+        print('감시일련번호', monitor_id)
+
+        # 4 - 전략 감시 시작 요청 - CpSysDib.CssWatchStgControl
+        result, status = self.StrategyService.request_monitoring(id, monitor_id, True)
+        if result is False:
+            return
+
+        return
 
     def timeout(self):
         current_time = QTime.currentTime()
@@ -60,10 +104,6 @@ class MyWindow(QMainWindow, form_class):
     def timeout2(self):
         if self.checkBox.isChecked():
             self.show_balance()
-
-    def timeout3(self):
-        if self.checkBox_2.isChecked():
-            self.get_unusual_stock()
 
     def code_changed(self):
         code = self.lineEdit.text()

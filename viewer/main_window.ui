@@ -201,7 +201,7 @@
       <x>10</x>
       <y>60</y>
       <width>841</width>
-      <height>481</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="title">
@@ -276,7 +276,7 @@
        <x>10</x>
        <y>80</y>
        <width>821</width>
-       <height>361</height>
+       <height>211</height>
       </rect>
      </property>
      <column>
@@ -319,7 +319,7 @@
      <property name="geometry">
       <rect>
        <x>740</x>
-       <y>450</y>
+       <y>300</y>
        <width>91</width>
        <height>23</height>
       </rect>
@@ -332,7 +332,7 @@
      <property name="geometry">
       <rect>
        <x>640</x>
-       <y>450</y>
+       <y>300</y>
        <width>91</width>
        <height>21</height>
       </rect>
@@ -346,9 +346,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>550</y>
+      <y>400</y>
       <width>841</width>
-      <height>181</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="title">
@@ -360,7 +360,7 @@
        <x>10</x>
        <y>20</y>
        <width>821</width>
-       <height>151</height>
+       <height>301</height>
       </rect>
      </property>
      <column>
@@ -401,19 +401,19 @@
       <x>870</x>
       <y>60</y>
       <width>641</width>
-      <height>481</height>
+      <height>611</height>
      </rect>
     </property>
     <property name="title">
-     <string>특징주 포착</string>
+     <string>전략 매칭주</string>
     </property>
     <widget class="QTableWidget" name="tableWidget_4">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>40</y>
        <width>621</width>
-       <height>421</height>
+       <height>561</height>
       </rect>
      </property>
      <column>
@@ -442,30 +442,27 @@
       </property>
      </column>
     </widget>
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="geometry">
-      <rect>
-       <x>450</x>
-       <y>450</y>
-       <width>91</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>실시간 조회</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_3">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>450</y>
+       <x>540</x>
+       <y>10</y>
        <width>81</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
       <string>조회</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_3">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>10</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
    </widget>

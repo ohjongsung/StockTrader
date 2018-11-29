@@ -20,7 +20,7 @@ class CpCssStgList(cp_util.Core):
     # 0     전략 목록 수
     # 1     요청구분
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # type 종류의 index 번째에 해당하는 데이터를 반환합니다.
     # type  value
@@ -33,7 +33,7 @@ class CpCssStgList(cp_util.Core):
     # 2     평균 수익
     # 2     전략 URL 주소( 해당 url로 웹 페이지에서 전략에 맞게 검색된 종목리스트를 가져올 수 있다)
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     # 데이터요청. Blocking Mode
     def block_request(self):
@@ -59,13 +59,13 @@ class CpCssStgFind(cp_util.Core):
     # 1     총 검색 종목 수
     # 2     검색 시간
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # type 종류의 index 번째에 해당하는 데이터를 반환합니다.
     # type  value
     # 0     종목 코드
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     # 데이터요청. Blocking Mode
     def block_request(self):
@@ -89,7 +89,7 @@ class CpCssWatchStgSubscribe(cp_util.Core):
     # type  value
     # 0     해당 전략ID 감시 일련 번호
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # 데이터요청. Blocking Mode
     def block_request(self):
@@ -115,9 +115,9 @@ class CpCssWatchStgControl(cp_util.Core):
     # type  value
     # 0     감시상태 : 0 - 초기상태, 1 - 감시중, 2 - 감시중단, 3 - 등록취소
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # 데이터요청. Blocking Mode
     def block_request(self):
-        self.obj.BlockRequest()
+        return self.obj.BlockRequest()
 
