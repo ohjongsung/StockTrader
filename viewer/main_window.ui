@@ -43,10 +43,10 @@
       <number>1</number>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>100</number>
+      <number>85</number>
      </attribute>
      <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>35</number>
+      <number>50</number>
      </attribute>
      <attribute name="verticalHeaderMinimumSectionSize">
       <number>15</number>
@@ -55,6 +55,11 @@
      <column>
       <property name="text">
        <string>계좌명</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>계좌번호</string>
       </property>
      </column>
      <column>
@@ -240,10 +245,10 @@
       </rect>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>150</number>
+      <number>100</number>
      </attribute>
      <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>80</number>
+      <number>50</number>
      </attribute>
      <column>
       <property name="text">

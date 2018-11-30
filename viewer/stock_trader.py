@@ -104,11 +104,6 @@ class MyWindow(QMainWindow, form_class):
         if self.checkBox.isChecked():
             self.show_balance()
 
-    def code_changed(self):
-        code = self.lineEdit.text()
-        name = self.StockService.code_to_name(code)
-        self.lineEdit_2.setText(name)
-
     def show_balance(self):
         balance = self.AccountService.check_balance()
         if balance is False:
@@ -122,6 +117,8 @@ class MyWindow(QMainWindow, form_class):
             self.tableWidget.setItem(0, i, item)
 
         self.tableWidget.resizeRowsToContents()
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(8, QtWidgets.QHeaderView.Stretch)
 
         cnt = len(stock)
         if cnt is 0:
