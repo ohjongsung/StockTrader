@@ -29,7 +29,7 @@ class CpMarketWatchPubSub(cp_util.Core):
     # 1     작업구분 : n - 신규, c - 취소
     # 2     특이사항 코드 : unusual_status_dic 참고
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     def subscribe(self):
         win32com.client.WithEvents(self.obj, CpMarketWatchHandler(self.obj))
@@ -146,7 +146,7 @@ class CpMarketWatchReqRes(cp_util.Core):
     # 1     시작시간
     # 2     수신개수
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # type 종류의 index 번째에 해당하는 데이터를 반환합니다.
     # type  value
@@ -156,7 +156,7 @@ class CpMarketWatchReqRes(cp_util.Core):
     # 3     항목구분
     # 4     내용
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     def block_request(self):
         self.obj.BlockRequest()

@@ -186,7 +186,7 @@ class CpTdCancelOrder(cp_util.Core):
     # 7     계좌명
     # 8     종목명
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # hts 장내주식 현금주문 관련 데이터요청. Blocking Mode
     def block_request(self):
@@ -223,7 +223,7 @@ class CpTdUpdateOrder(cp_util.Core):
     # 8     계좌명
     # 9     종목명
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # hts 장내주식 현금주문 관련 데이터요청. Blocking Mode
     def block_request(self):

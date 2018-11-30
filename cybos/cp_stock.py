@@ -38,7 +38,7 @@ class CpStockMst(cp_util.Core):
     #  19  누적거래대금
     #  추가적으로 필요한건 나중에 필요할때 하자
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # type 종류의 index 번째에 해당하는 데이터를 반환합니다.
     # type  value
@@ -49,7 +49,7 @@ class CpStockMst(cp_util.Core):
     # 4     매도잔량대비
     # 5     매수잔량대비
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     def block_request(self):
         self.obj.BlockRequest()

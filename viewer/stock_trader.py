@@ -6,6 +6,7 @@ from service import stock
 from service import watch
 from service import slack
 from service import strategy
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
@@ -52,6 +53,7 @@ class MyWindow(QMainWindow, form_class):
         strategy_name = self.comboBox_3.currentText()
         print(strategy_name)
         if strategy_name == '전략선택없음':
+            self.StrategyService.monitoring_all_stop()
             return
 
         # 1: 기존 감시 중단 (중요)
@@ -137,31 +139,35 @@ class MyWindow(QMainWindow, form_class):
         self.tableWidget_2.resizeRowsToContents()
 
     def change_strategy_stocks(self, stock):
-        if stock['INOUT'] is '진입':
-            self.strategy_stocks.append(stock)
-            self.show_strategy_stocks()
+        if stock['INOUT'] == '진입':
+            if stock['code'] not in [check_stock['code'] for check_stock in self.strategy_stocks]:
+                self.strategy_stocks.append(stock)
+                self.show_strategy_stocks()
         else:
-            for i in range(len(self.strategy_stocks)):
-                if stock['code'] is self.strategy_stocks[i]['code']:
-                    self.strategy_stocks.remove(i)
+            self.strategy_stocks = [check_stock for check_stock in self.strategy_stocks if check_stock['code'] != stock['code']]
+            self.show_strategy_stocks()
 
     def show_strategy_stocks(self):
         cnt = len(self.strategy_stocks)
         if cnt is 0:
             print('전략에 검색된 종목이 없습니다.')
             return False
-
+        print(cnt)
         self.tableWidget_4.setRowCount(cnt)
 
         column_name = ['time', 'code', '종목명']
         for i in range(cnt):
             row = self.strategy_stocks[i]
-            for j in range(len(row)):
+            for j in range(3):
                 item = QTableWidgetItem(row[column_name.__getitem__(j)])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_4.setItem(i, j, item)
 
         self.tableWidget_4.resizeRowsToContents()
+        header = self.tableWidget_4.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QtWidgets.QHeaderView.Stretch)
 
 
 if __name__ == "__main__":

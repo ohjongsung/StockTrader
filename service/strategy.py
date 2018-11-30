@@ -2,6 +2,7 @@ import win32com.client
 from cybos import cp_strategy
 from service import stock
 from service import slack
+import datetime
 
 
 # 주식 정보 서비스 클래스
@@ -49,13 +50,17 @@ class StrategyService:
 
         cnt = self.CpCssStgFind.get_header_value(0)
         total_cnt = self.CpCssStgFind.get_header_value(1)
-        search_time = self.CpCssStgFind.get_header_value(2)
-        print('검색된 종목수:', cnt, '전체종목수:', total_cnt, '검색시간:', search_time)
+
+        now = datetime.datetime.now()
+        now_date = now.strftime('%Y/%m/%d')
+        time = datetime.datetime.strptime(self.CpCssStgFind.get_header_value(2), '%m/%d %H:%M:%S').strftime('%H:%M:%S')
+        time_str = now_date + ' ' + time
+        print('검색된 종목수:', cnt, '전체종목수:', total_cnt, '검색시간:', time_str)
 
         stock_list = []
         for i in range(cnt):
             item = {}
-            item['time'] = search_time
+            item['time'] = time_str
             item['code'] = self.CpCssStgFind.get_data_value(0, i)
             item['종목명'] = self.StockService.code_to_name(item['code'])
             stock_list.append(item)
@@ -72,9 +77,11 @@ class StrategyService:
         monitoring_id = CpCssWatchStgSubscribe.get_header_value(0)
         if monitoring_id is 0:
             print("감시 일련번호 얻기 실패")
+            self.monitoring_all_stop()
             return False
         elif monitoring_id is 1:
             print("현재 감시중인 전략이 있습니다.")
+            self.monitoring_all_stop()
             return False
 
         return True, monitoring_id
@@ -164,28 +171,30 @@ class CpCssAlert:
 class CpStrategyWatchHandler:
     def __init__(self):
         self.StockService = stock.StockService()
-        self.Slack = slack.Slack()
 
     def set_client(self, client, caller):
         self.client = client
         self.caller = caller
 
-    def on_received(self):
+    def OnReceived(self):
         stock = {}
-        stock['전략ID'] = self.client.get_header_value(0)
-        stock['감시일련번호'] = self.client.get_header_value(1)
-        code = stock['code'] = self.client.get_header_value(2)
+        stock['전략ID'] = self.client.GetHeaderValue(0)
+        stock['감시일련번호'] = self.client.GetHeaderValue(1)
+        code = stock['code'] = self.client.GetHeaderValue(2)
         stock['종목명'] = self.StockService.code_to_name(code)
 
-        in_out_flag = self.client.get_header_value(3)
+        in_out_flag = self.client.GetHeaderValue(3)
         if ord('1') is in_out_flag:
             stock['INOUT'] = '진입'
         elif ord('2') is in_out_flag:
             stock['INOUT'] = '퇴출'
-        stock['time'] = self.client.get_header_value(4)
-        stock['현재가'] = self.client.get_header_value(5)
+        now = datetime.datetime.now()
+        now_date = now.strftime('%Y/%m/%d')
+        time = datetime.datetime.strptime(self.client.GetHeaderValue(4), '%H%M%S').strftime('%H:%M:%S')
+        time_str = now_date + ' ' + time
+        stock['time'] = time_str
+        stock['현재가'] = self.client.GetHeaderValue(5)
 
-        message = stock['code'] + '/' + stock['종목명'] + ' ' + stock['INOUT'] + ' ' + stock['time'] + ' ' + stock['현재가']
+        message = stock['code'] + ' | ' + stock['종목명'] + ' ' + stock['INOUT'] + ' ' + stock['time'] + ' ' + str(stock['현재가'])
         print(message)
-        self.Slack.push(message)
         self.caller.change_strategy_stocks(stock)

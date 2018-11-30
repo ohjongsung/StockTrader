@@ -34,7 +34,7 @@ class CpAccount(cp_util.Core):
     # 11    잔고평가금액
     # 12    대주금액
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     # type 종류의 index 번째에 해당하는 데이터를 반환합니다.
     # type  value
@@ -56,7 +56,7 @@ class CpAccount(cp_util.Core):
     # 17    체결장부단가
     # 18    손익단가
     def get_data_value(self, data_type, index):
-        self.obj.GetDataValue(data_type, index)
+        return self.obj.GetDataValue(data_type, index)
 
     def block_request(self):
         self.obj.BlockRequest()
@@ -91,7 +91,7 @@ class CpAvailableBuy(cp_util.Core):
     # 45    예수금
     # 나머지 사항들은 사용하지 않을듯 하다.
     def get_header_value(self, data_type):
-        self.obj.GetHeaderValue(data_type)
+        return self.obj.GetHeaderValue(data_type)
 
     def block_request(self):
         self.obj.BlockRequest()

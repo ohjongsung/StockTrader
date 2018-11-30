@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1528</width>
+    <width>1585</width>
     <height>784</height>
    </rect>
   </property>
@@ -239,6 +239,12 @@
        <height>611</height>
       </rect>
      </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>80</number>
+     </attribute>
      <column>
       <property name="text">
        <string>시간</string>
@@ -272,7 +278,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1528</width>
+     <width>1585</width>
      <height>21</height>
     </rect>
    </property>
