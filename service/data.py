@@ -35,8 +35,8 @@ class DataService:
 
         self.CpData.set_input_value(0, code)
         self.CpData.set_input_value(1, ord('1'))
-        self.CpData.set_input_value(2, 20181130)
-        self.CpData.set_input_value(3, 20181121)
+        self.CpData.set_input_value(2, self.today_stamp)
+        self.CpData.set_input_value(3, from_date)
         self.CpData.set_input_value(5, [0, 2, 3, 4, 5, 8, 9])
         self.CpData.set_input_value(6, ord('D'))
         self.CpData.set_input_value(9, 1)
