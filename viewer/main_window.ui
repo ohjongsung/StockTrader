@@ -34,7 +34,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>50</y>
        <width>821</width>
        <height>51</height>
       </rect>
@@ -102,7 +102,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>110</y>
        <width>821</width>
        <height>211</height>
       </rect>
@@ -146,8 +146,8 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>740</x>
-       <y>300</y>
+       <x>640</x>
+       <y>20</y>
        <width>91</width>
        <height>23</height>
       </rect>
@@ -159,14 +159,27 @@
     <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
       <rect>
-       <x>640</x>
-       <y>300</y>
+       <x>540</x>
+       <y>20</y>
        <width>91</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>실시간 조회</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>744</x>
+       <y>20</y>
+       <width>81</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>데이터 수집</string>
      </property>
     </widget>
    </widget>

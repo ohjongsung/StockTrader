@@ -6,6 +6,7 @@ from service import stock
 from service import watch
 from service import slack
 from service import strategy
+from service import data
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -26,6 +27,7 @@ class MyWindow(QMainWindow, form_class):
         self.WatchService = watch.WatchService()
         self.Slack = slack.Slack()
         self.StrategyService = strategy.StrategyService()
+        self.DataService = data.DataService()
         self.my_strategy_list = {}
         self.strategy_stocks = []
 
@@ -37,10 +39,14 @@ class MyWindow(QMainWindow, form_class):
         self.timer2.start(1000*10)
         self.timer2.timeout.connect(self.timeout2)
 
+        self.pushButton.clicked.connect(self.collect_data)
         self.pushButton_2.clicked.connect(self.show_balance)
         self.comboBox_3.currentIndexChanged.connect(self.change_strategy)
         # 전략리스트 조회
         self.list_up_my_strategy()
+
+    def collect_data(self):
+        self.DataService.collect_data_dwm()
 
     def list_up_my_strategy(self):
         self.comboBox_3.addItem('전략선택없음')
