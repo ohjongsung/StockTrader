@@ -76,7 +76,7 @@ class DataService:
 
     def collect_data_dwm(self):
         kospi = self.CpCodeMgr.get_stock_list_by_market(1)
-        kosdaq = self.CpCodeMgr.get_stock_list_by_market(22)
+        kosdaq = self.CpCodeMgr.get_stock_list_by_market(2)
         code_list = list(kospi + kosdaq)
         conn = self.engine.connect()
         for i in range(len(code_list)):

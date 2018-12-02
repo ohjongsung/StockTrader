@@ -104,6 +104,7 @@ class CpStockCode(Core):
 
 
 # 주식 코드 정보 및 코드 리스트 조회 클래스
+# https://money2.daishin.com/e5/mboard/ptype_basic/HTS_Plus_Helper/DW_Basic_Read_Page.aspx?boardseq=284&seq=11&page=1&searchString=CpCodeMgr&p=8839&v=8642&m=9508
 class CpCodeMgr(Core):
     def __init__(self):
         self.obj = win32com.client.Dispatch('CpUtil.CpCodeMgr')
