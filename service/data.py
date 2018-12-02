@@ -47,8 +47,8 @@ class DataService:
         data = []
         for i in range(cnt):
             temp_date={}
-            temp_date['code'] = code
             temp_date['date'] = self.CpData.get_data_value(0, i)
+            temp_date['code'] = code
             temp_date['open'] = self.CpData.get_data_value(1, i)
             temp_date['high'] = self.CpData.get_data_value(2, i)
             temp_date['low'] = self.CpData.get_data_value(3, i)
@@ -57,7 +57,7 @@ class DataService:
             temp_date['trade_amount'] = self.CpData.get_data_value(6, i)
             data.append(temp_date)
 
-        stock_data = pd.DataFrame(data, columns=['code', 'date', 'open', 'high', 'low', 'close', 'trade_volume', 'trade_amount'])
+        stock_data = pd.DataFrame(data, columns=['date', 'code', 'open', 'high', 'low', 'close', 'trade_volume', 'trade_amount'])
         return stock_data
 
     # 대기시간 체크(TR 제한이 15초에 30개이다)
