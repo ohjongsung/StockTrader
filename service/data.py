@@ -23,8 +23,7 @@ class DataService:
         self.engine = db.create_engine(connect_string)
         self.metadata = db.MetaData()
         self.daily_charts = db.Table('daily_charts', self.metadata, autoload=True, autoload_with=self.engine)
-        print(self.daily_charts.columns.keys())
-        print(repr(self.metadata.tables['daily_charts']))
+        self.stock_info = db.Table('stock_info', self.metadata, autoload=True, autoload_with=self.engine)
 
     def get_stock_data_dwm(self, code, last_date):
         from_date = open_date = int(self.CpCodeMgr.get_stock_listed_date(code))
@@ -115,3 +114,11 @@ class DataService:
         conn = self.engine.connect()
         basic_stock_info.to_sql(con=self.engine, name='stock_info', if_exists='replace', index=False)
         conn.close()
+
+    def get_stocks_info(self):
+        conn = self.engine.connect()
+        query = db.select([self.stock_info])
+        result_proxy = conn.execute(query)
+        result_set = result_proxy.fetchall()
+        code_list = pd.DataFrame(result_set, columns=['code', 'name', 'from_date'])
+        return code_list
