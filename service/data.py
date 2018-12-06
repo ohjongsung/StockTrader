@@ -12,6 +12,7 @@ class DataService:
         self.CpData = cp_data.CpData()
         self.CpCodeMgr = cp_util.CpCodeMgr()
         self.CpCybos = cp_util.CpCybos()
+        self.CpStockCode = cp_util.CpStockCode()
         today = datetime.datetime.now()
         self.today_stamp = today.year * 10000 + today.month * 100 + today.day
         with open('../.ignores/database.txt') as f:
@@ -83,7 +84,7 @@ class DataService:
             last_date = self.get_last_collect_day(code_list[i], conn)
             stock_data = self.get_stock_data_dwm(code_list[i], last_date)
             try:
-                stock_data.to_sql(con=self.engine, name='daily_charts', if_exists='append', index=False)
+                stock_data.to_sql(con=self.engine, name='daily_charts', if_exists='replace', index=False)
             except Exception as e:
                 print('code %s not saved. reason : %s' % (code_list[i], e))
             finally:
@@ -97,3 +98,20 @@ class DataService:
         result = conn.execute(query).scalar()
         return result
 
+    def collect_basic_stock_info(self):
+        kospi = self.CpCodeMgr.get_stock_list_by_market(1)
+        kosdaq = self.CpCodeMgr.get_stock_list_by_market(2)
+        code_list = list(kospi + kosdaq)
+
+        data = []
+        for i in range(len(code_list)):
+            temp_date={}
+            temp_date['code'] = code_list[i]
+            temp_date['name'] = self.CpStockCode.code_to_name(code_list[i])
+            temp_date['from_date'] = int(self.CpCodeMgr.get_stock_listed_date(code_list[i]))
+            data.append(temp_date)
+
+        basic_stock_info = pd.DataFrame(data, columns=['code', 'name', 'from_date'])
+        conn = self.engine.connect()
+        basic_stock_info.to_sql(con=self.engine, name='stock_info', if_exists='replace', index=False)
+        conn.close()

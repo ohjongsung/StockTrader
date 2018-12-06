@@ -41,9 +41,13 @@ class MyWindow(QMainWindow, form_class):
 
         self.pushButton.clicked.connect(self.collect_data)
         self.pushButton_2.clicked.connect(self.show_balance)
+        self.pushButton_3.clicked.connect(self.refresh_basic_stock_info)
         self.comboBox_3.currentIndexChanged.connect(self.change_strategy)
         # 전략리스트 조회
         self.list_up_my_strategy()
+
+    def refresh_basic_stock_info(self):
+        self.DataService.collect_basic_stock_info()
 
     def collect_data(self):
         self.DataService.collect_data_dwm()
