@@ -146,40 +146,53 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>640</x>
+       <x>150</x>
        <y>20</y>
-       <width>91</width>
-       <height>23</height>
+       <width>90</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>조회</string>
+      <string>현황 조회</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBox">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>20</x>
        <y>20</y>
-       <width>91</width>
+       <width>121</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>실시간 조회</string>
+      <string>실시간 현황 조회</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>744</x>
+       <x>640</x>
        <y>20</y>
-       <width>81</width>
-       <height>23</height>
+       <width>90</width>
+       <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>데이터 수집</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>740</x>
+       <y>20</y>
+       <width>90</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>코드 정보 갱신</string>
      </property>
     </widget>
    </widget>
