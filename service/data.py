@@ -46,7 +46,7 @@ class DataService:
 
         data = []
         for i in range(cnt):
-            temp_date={}
+            temp_date = dict()
             temp_date['date'] = self.CpData.get_data_value(0, i)
             temp_date['code'] = code
             temp_date['open'] = self.CpData.get_data_value(1, i)
@@ -72,7 +72,7 @@ class DataService:
                 remain_count = self.CpCybos.get_limit_remain_count(1)  # 시세 제한
                 remain_time = self.CpCybos.get_limit_request_remain_time
             elapsed_time = time.time() - time_start
-            print("시간 지연: %.2f" %elapsed_time, "시간:", remain_time)
+            print("시간 지연: %.2f" % elapsed_time, "시간:", remain_time)
 
     def collect_data_dwm(self):
         kospi = self.CpCodeMgr.get_stock_list_by_market(1)
@@ -104,7 +104,7 @@ class DataService:
 
         data = []
         for i in range(len(code_list)):
-            temp_date={}
+            temp_date = dict()
             temp_date['code'] = code_list[i]
             temp_date['name'] = self.CpStockCode.code_to_name(code_list[i])
             temp_date['from_date'] = int(self.CpCodeMgr.get_stock_listed_date(code_list[i]))

@@ -18,7 +18,7 @@ class StockService:
         if self.StockMst.get_communication_status() is False:
             return False
 
-        price_info = {}
+        price_info = dict()
         price_info['code'] = code
         price_info['name'] = self.StockMst.get_header_value(1)
         price_info['current'] = self.StockMst.get_header_value(11)

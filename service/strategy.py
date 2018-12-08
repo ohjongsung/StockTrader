@@ -1,7 +1,6 @@
 import win32com.client
 from cybos import cp_strategy
 from service import stock
-from service import slack
 import datetime
 
 
@@ -59,7 +58,7 @@ class StrategyService:
 
         stock_list = []
         for i in range(cnt):
-            item = {}
+            item = dict()
             item['time'] = time_str
             item['code'] = self.CpCssStgFind.get_data_value(0, i)
             item['종목명'] = self.StockService.code_to_name(item['code'])
@@ -177,7 +176,7 @@ class CpStrategyWatchHandler:
         self.caller = caller
 
     def OnReceived(self):
-        stock = {}
+        stock = dict()
         stock['전략ID'] = self.client.GetHeaderValue(0)
         stock['감시일련번호'] = self.client.GetHeaderValue(1)
         code = stock['code'] = self.client.GetHeaderValue(2)

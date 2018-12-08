@@ -26,8 +26,8 @@ class AccountService:
         if self.CpAccount.get_communication_status() is False:
             return False
 
-        balance = {}
-        total_list = []
+        balance = dict()
+        total_list = list()
         total_list.append(self.CpAccount.get_header_value(0))  # 계좌명
         total_list.append(self.accountNumber)
         total_list.append(self.CpAccount.get_header_value(1))  # 결제잔고수량
